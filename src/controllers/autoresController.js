@@ -1,4 +1,4 @@
-import { autoresSchema } from '../models/AutoresSchema'
+import { autoresSchema } from '../models/AutoresSchema.js'
 
 export class AutorController {
   static listarAutores = (_request, response) => {
