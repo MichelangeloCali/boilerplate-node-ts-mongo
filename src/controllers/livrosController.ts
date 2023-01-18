@@ -1,7 +1,8 @@
-import { livrosSchema } from '../models/LivrosSchema.js'
+import { Request, Response } from 'express'
+import { livrosSchema } from '../models/LivrosSchema'
 
 export class LivroController {
-  static listarLivros = (_request, response) => {
+  static listarLivros = (_request: Request, response: Response) => {
     livrosSchema
       .find()
       .populate('autor')
@@ -10,7 +11,7 @@ export class LivroController {
       })
   }
 
-  static listarLivroId = (request, response) => {
+  static listarLivroId = (request: Request, response: Response) => {
     const id = request.params.id
     livrosSchema
       .findById(id)
@@ -26,20 +27,24 @@ export class LivroController {
       })
   }
 
-  static listarLivroEditora = (request, response) => {
+  static listarLivroEditora = (request: Request, response: Response) => {
     try {
       const editora = request.query.editora
-      livrosSchema.find({ editora: editora }, {}, (_error, livrosSchema) => {
-        response.status(200).send(livrosSchema)
-      })
+      livrosSchema.find(
+        { editora: editora },
+        {},
+        (_error: any, livrosSchema: any) => {
+          response.status(200).send(livrosSchema)
+        }
+      )
     } catch (error) {
       response.status(500).send({ message: 'Internal server error' })
     }
   }
 
-  static cadastrarLivro = (request, response) => {
+  static cadastrarLivro = (request: Request, response: Response) => {
     const livro = new livrosSchema(request.body)
-    livro.save((error) => {
+    livro.save((error: any) => {
       if (error) {
         response
           .status(500)
@@ -50,9 +55,9 @@ export class LivroController {
     })
   }
 
-  static atualizarLivro = (request, response) => {
+  static atualizarLivro = (request: Request, response: Response) => {
     const id = request.params.id
-    livrosSchema.findByIdAndUpdate(id, { $set: request.body }, (error) => {
+    livrosSchema.findByIdAndUpdate(id, { $set: request.body }, (error: any) => {
       if (!error) {
         response.status(200).send({ message: 'Livro atualizado com sucesso!' })
       } else {
@@ -61,9 +66,9 @@ export class LivroController {
     })
   }
 
-  static excluirLivro = (request, response) => {
+  static excluirLivro = (request: Request, response: Response) => {
     const id = request.params.id
-    livrosSchema.findByIdAndDelete(id, (error) => {
+    livrosSchema.findByIdAndDelete(id, (error: any) => {
       if (!error) {
         response.status(200).send({ message: 'Livro removido com sucesso.' })
       } else {
