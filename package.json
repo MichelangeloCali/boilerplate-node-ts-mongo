@@ -34,22 +34,18 @@
     "mongoose": "6.2.6"
   },
   "scripts": {
+    "precommit": "tsc --noEmit && lint-staged",
     "dev:server": "nodemon",
     "dev:server-debug": "node -r ts-node/register --inspect=5858 src/index.ts",
     "lint": "tsc --noEmit && eslint '{src,__test__}/**/*.{js,ts,tsx}' --quiet --fix",
     "lint:fix": "eslint . --fix",
-    "prepare": "husky install",
     "obsolete:prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "yarn build",
     "start": "node .",
     "test": "jest",
-    "dev:tdd": "node --inspect=5859 node_modules/.bin/jest --runInBand --watch"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsc --noEmit && lint-staged"
-    }
+    "dev:tdd": "node --inspect=5859 node_modules/.bin/jest --runInBand --watch",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
