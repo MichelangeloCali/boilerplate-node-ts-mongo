@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 
-mongoose.connect('mongodb+srv://michelangelocali:12345@cluster0.eauetap.mongodb.net/alura-node')
+dotenv.config()
+
+mongoose.connect(process.env.MONGO_ACCOUNT)
 
 export const db = mongoose.connection
