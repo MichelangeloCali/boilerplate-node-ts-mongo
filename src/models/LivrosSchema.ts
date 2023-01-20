@@ -6,10 +6,10 @@ const livroSchema = new mongoose.Schema({
   autor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'autores',
-    required: true
+    required: true,
   },
   editora: { type: String, required: true },
-  numeroPaginas: { type: Number }
+  numeroPaginas: { type: Number },
 })
 
 export const livrosSchema = mongoose.model('livros', livroSchema)

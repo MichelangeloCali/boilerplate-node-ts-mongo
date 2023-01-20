@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
-  "type": "module",
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.15",

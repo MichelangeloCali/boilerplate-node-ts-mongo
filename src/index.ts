@@ -1,6 +1,9 @@
 import { app } from './app'
+import dotenv from 'dotenv'
 
-const port = process.env.PORT || 3000
+dotenv.config()
+
+const port = process.env.PORT || 3003
 
 app.listen(port, () => {
   console.log(`Servidor escutando em http://localhost:${port}`)

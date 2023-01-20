@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { Livros } from '../types/LivrosTypes'
 import { livrosSchema } from '../models/LivrosSchema'
 
 export class LivroController {
@@ -16,10 +17,10 @@ export class LivroController {
     livrosSchema
       .findById(id)
       .populate('autor', 'nome') //o segundo parâmetro filtra o retorno esperado.
-      .exec((error, livrosSchema) => {
+      .exec((error: Error, livrosSchema: Livros) => {
         if (error) {
           response.status(400).send({
-            message: ` ${error.message} Livro inválido, por favor tente novamente.`
+            message: ` ${error.message} Livro inválido, por favor tente novamente.`,
           })
         } else {
           response.status(200).send(livrosSchema)
@@ -30,13 +31,9 @@ export class LivroController {
   static listarLivroEditora = (request: Request, response: Response) => {
     try {
       const editora = request.query.editora
-      livrosSchema.find(
-        { editora: editora },
-        {},
-        (_error: any, livrosSchema: any) => {
-          response.status(200).send(livrosSchema)
-        }
-      )
+      livrosSchema.find({ editora: editora }, {}, (_error: Error, livrosSchema: Livros) => {
+        response.status(200).send(livrosSchema)
+      })
     } catch (error) {
       response.status(500).send({ message: 'Internal server error' })
     }
@@ -44,11 +41,9 @@ export class LivroController {
 
   static cadastrarLivro = (request: Request, response: Response) => {
     const livro = new livrosSchema(request.body)
-    livro.save((error: any) => {
+    livro.save((error: Error) => {
       if (error) {
-        response
-          .status(500)
-          .send({ message: `Falha ao cadastrar o livro. ${error.message}` })
+        response.status(500).send({ message: `Falha ao cadastrar o livro. ${error.message}` })
       } else {
         response.status(201).send(livro.toJSON())
       }
@@ -57,7 +52,7 @@ export class LivroController {
 
   static atualizarLivro = (request: Request, response: Response) => {
     const id = request.params.id
-    livrosSchema.findByIdAndUpdate(id, { $set: request.body }, (error: any) => {
+    livrosSchema.findByIdAndUpdate(id, { $set: request.body }, (error: Error) => {
       if (!error) {
         response.status(200).send({ message: 'Livro atualizado com sucesso!' })
       } else {
@@ -68,7 +63,7 @@ export class LivroController {
 
   static excluirLivro = (request: Request, response: Response) => {
     const id = request.params.id
-    livrosSchema.findByIdAndDelete(id, (error: any) => {
+    livrosSchema.findByIdAndDelete(id, (error: Error) => {
       if (!error) {
         response.status(200).send({ message: 'Livro removido com sucesso.' })
       } else {
