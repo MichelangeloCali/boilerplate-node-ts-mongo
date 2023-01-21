@@ -36,7 +36,7 @@
     "precommit": "tsc --noEmit && lint-staged",
     "dev:server": "nodemon",
     "dev:server-debug": "node -r ts-node/register --inspect=5858 src/index.ts",
-    "lint": "tsc --noEmit && eslint '{src,__test__}/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "tsc --noEmit && eslint '{src,__test__}/**/*.{js,ts,tsx}' --quiet",
     "lint:fix": "eslint . --fix",
     "obsolete:prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
@@ -48,8 +48,7 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "eslint --fix --quiet",
-      "git add"
+      "eslint --fix --quiet"
     ]
   }
 }
